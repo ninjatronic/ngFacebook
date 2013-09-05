@@ -1,0 +1,18 @@
+{
+    "author": "Ninjatronic",
+    "devDependencies": {
+        "grunt": "",
+        "grunt-contrib-clean": "",
+        "grunt-contrib-copy": "",
+        "grunt-contrib-jshint": "",
+        "grunt-contrib-watch": "",
+        "grunt-contrib-concat": "",
+        "grunt-contrib-uglify": "",
+        "grunt-karma": "",
+        "grunt-notify": "",
+        "grunt-strip": "",
+        "grunt-text-replace": ""
+    },
+    "name": "angular-facebook",
+    "version": "0.0.1"
+}
