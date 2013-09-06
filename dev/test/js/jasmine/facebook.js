@@ -14,6 +14,44 @@ describe('facebook', function() {
             it('should be defined', function() {
                 expect(facebook.init).toBeDefined();
             });
+
+            var events = {
+                auth: ['login', 'authResponseChange', 'statusChange', 'logout', 'prompt'],
+                xfbml: ['render'],
+                edge: ['create', 'remove'],
+                comment: ['create', 'remove'],
+                message: ['send']
+            };
+
+            angular.forEach(events, function(events, domain){
+                angular.forEach(events, function(event) {
+                    var eventName = domain+'.'+event;
+
+                    it('should subscribe to the '+eventName+' event', function() {
+                        var subscribedEvents = [];
+                        spyOn(FB.Event, 'subscribe').andCallFake(function(name) {
+                            subscribedEvents.push(name);
+                        });
+                        facebook.init();
+                        expect(subscribedEvents).toContain(eventName);
+                    });
+
+                    it('should broadcast the '+eventName+' event as facebook.'+eventName, function() {
+                        var subscribedEvents = {};
+                        var expected = {data: 'payload'};
+                        var response = null;
+                        spyOn(FB.Event, 'subscribe').andCallFake(function(name, handler) {
+                            subscribedEvents[name] = handler;
+                        });
+                        facebook.init();
+                        rootScope.$on('facebook.'+eventName, function(event, args) {
+                            response = args;
+                        });
+                        subscribedEvents[eventName](expected);
+                        expect(response).toBe(expected);
+                    });
+                });
+            });
         });
 
         describe('-> api', function() {
@@ -90,7 +128,6 @@ describe('facebook', function() {
                 });
                 var result = null;
                 facebook.ui('args').then(null, function(error) {
-                    console.log(error);
                     result = error;
                 });
                 rootScope.$apply();
@@ -153,7 +190,6 @@ describe('facebook', function() {
                 });
                 var result = null;
                 facebook.getLoginStatus().then(null, function(error) {
-                    console.log(error);
                     result = error;
                 });
                 rootScope.$apply();
