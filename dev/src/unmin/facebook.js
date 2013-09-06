@@ -46,30 +46,33 @@ angular.module('facebook', []).factory('$facebook',
             });
         }
 
-        function api(args) {
+        function wrap(func, args) {
             var deferred = $q.defer();
-            FB.api(args, function(response){
-                if(response.error) {
-                    console.log('error');
-                    console.log(response);
+            func(args, function(response){
+                if(response && response.error) {
                     $rootScope.$apply(function(){
                         deferred.reject(response);
-                        console.log('resolved');
                     });
                 } else {
-                    console.log('success');
-                    console.log(response);
                     $rootScope.$apply(function(){
                         deferred.resolve(response);
-                        console.log('resolved');
                     });
                 }
             });
             return deferred.promise;
         }
 
+        function api(args) {
+            return wrap(FB.api, args);
+        }
+
+        function ui(args) {
+            return wrap(FB.ui, args);
+        }
+
         return {
             init: init,
-            api: api
+            api: api,
+            ui: ui
         };
     }]);
