@@ -6,13 +6,17 @@ Currently under active development.
 
 ## Building
 
-**Once the code is in a stable state I will include a pre-built version in this repository**
-
 This project uses grunt for tooling. To build, navigate to the root directory and run `grunt build`. The built file is located at `build/angular-facebook.min.js`.
 
-## Usage
+## Support
 
-**NB: Some features are yet to be fully implemented**
+Currently supported features of the Facebook SDK:
+
+* User Authentication (login, logout etc)
+* Graph API
+* UI
+
+## Usage
 
 You will need to initialise the facebook SDK externally before bootstrapping your angular app. This is the only way I could find to get around problems with the SDKs async loading routine. If you have any ideas to improve this **please comment, or even better submit a pull request!**
 
