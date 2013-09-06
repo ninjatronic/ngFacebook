@@ -4,7 +4,7 @@ Facebook SDK wrapper for AngularJS Apps.
 
 Currently under active development.
 
-Find the v0.0.1 build [here](../blob/v0.0.1/version/v0.0.1/angular-facebook.min.js).
+Find the v0.0.1 build [here](../../blob/v0.0.1/version/v0.0.1/angular-facebook.min.js).
 
 ## Building
 
