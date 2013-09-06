@@ -12,7 +12,7 @@ This project uses grunt for tooling. To build, navigate to the root directory an
 
 ## Usage
 
-**NB: Some features INCLUDING initialisation are yet to be fully implemented**
+**NB: Some features are yet to be fully implemented**
 
 You will need to initialise the facebook SDK externally before bootstrapping your angular app. This is the only way I could find to get around problems with the SDKs async loading routine. If you have any ideas to improve this **please comment, or even better submit a pull request!**
 
