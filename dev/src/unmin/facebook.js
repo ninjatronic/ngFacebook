@@ -62,6 +62,22 @@ angular.module('facebook', []).factory('$facebook',
             return deferred.promise;
         }
 
+        function wrapNoArgs(func) {
+            var deferred = $q.defer();
+            func(function(response){
+                if(response && response.error) {
+                    $rootScope.$apply(function(){
+                        deferred.reject(response);
+                    });
+                } else {
+                    $rootScope.$apply(function(){
+                        deferred.resolve(response);
+                    });
+                }
+            });
+            return deferred.promise;
+        }
+
         function api(args) {
             return wrap(FB.api, args);
         }
@@ -70,7 +86,17 @@ angular.module('facebook', []).factory('$facebook',
             return wrap(FB.ui, args);
         }
 
+        function getAuthResponse() {
+            return FB.getAuthResponse();
+        }
+
+        function getLogInStatus() {
+            return wrapNoArgs(FB.getLoginStatus);
+        }
+
         return {
+            getAuthResponse: getAuthResponse,
+            getLoginStatus: getLogInStatus,
             init: init,
             api: api,
             ui: ui
