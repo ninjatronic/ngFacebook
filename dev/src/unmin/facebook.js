@@ -1,8 +1,7 @@
 angular.module('facebook', []).factory('$facebook',
-    ['$rootScope', '$window',
-    function($rootScope, $window){
+    ['$rootScope', '$window', '$q',
+    function($rootScope, $window, $q){
 
-        var authEvents = ['login', 'authResponseChange', 'statusChange', 'logout', 'prompt'];
         var events = {
             auth: ['login', 'authResponseChange', 'statusChange', 'logout', 'prompt'],
             xfbml: ['render'],
@@ -47,7 +46,22 @@ angular.module('facebook', []).factory('$facebook',
             });
         }
 
+        function api(args) {
+            var deferred = $q.defer();
+            $rootScope.$apply(function() {
+                FB.api(args, function(response){
+                    if(response.error) {
+                        deferred.resolve(response);
+                    } else {
+                        deferred.reject(response);
+                    }
+                });
+            });
+            return deferred.promise;
+        }
+
         return {
-            init: init
+            init: init,
+            api: api
         };
     }]);
