@@ -48,14 +48,22 @@ angular.module('facebook', []).factory('$facebook',
 
         function api(args) {
             var deferred = $q.defer();
-            $rootScope.$apply(function() {
-                FB.api(args, function(response){
-                    if(response.error) {
-                        deferred.resolve(response);
-                    } else {
+            FB.api(args, function(response){
+                if(response.error) {
+                    console.log('error');
+                    console.log(response);
+                    $rootScope.$apply(function(){
                         deferred.reject(response);
-                    }
-                });
+                        console.log('resolved');
+                    });
+                } else {
+                    console.log('success');
+                    console.log(response);
+                    $rootScope.$apply(function(){
+                        deferred.resolve(response);
+                        console.log('resolved');
+                    });
+                }
             });
             return deferred.promise;
         }

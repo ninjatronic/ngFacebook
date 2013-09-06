@@ -5,6 +5,7 @@ module.exports = function(config) {
         browsers: ['PhantomJS'],
         frameworks: ['jasmine'],
         files: [
+            'test/js/globals.js',
             'test/js/angular.js',
             'test/js/angular-mocks.js',
             'test/js/jasmine/**/*.js',
