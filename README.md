@@ -17,8 +17,8 @@ This project uses grunt for tooling. To build, navigate to the root directory an
 Include the module in your app and initialise it with your app ID:
 ```javascript
 angular
-    .module('my-angularjs-app', ['facebook'])
-    .config(['$facebook', function($facebook) {
+    .module('my-angularjs-app', ['facebookProvider'])
+    .config(['facebookProvider', function($facebook) {
         $facebook.init('myApplicationId', 'url/of/channel.html')
             .then(function() {
                 // further initialisation code here
