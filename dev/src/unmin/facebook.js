@@ -22,23 +22,7 @@ angular.module('facebook', []).factory('$facebook',
             });
         }
 
-        function wrap(func, args) {
-            var deferred = $q.defer();
-            func(args, function(response){
-                if(response && response.error) {
-                    $rootScope.$apply(function(){
-                        deferred.reject(response);
-                    });
-                } else {
-                    $rootScope.$apply(function(){
-                        deferred.resolve(response);
-                    });
-                }
-            });
-            return deferred.promise;
-        }
-
-        function wrapNoArgs(func) {
+        function wrap(func) {
             var deferred = $q.defer();
             func(function(response){
                 if(response && response.error) {
@@ -54,12 +38,22 @@ angular.module('facebook', []).factory('$facebook',
             return deferred.promise;
         }
 
+        function wrapWithArgs(func, args) {
+            return wrap(function(callback) {
+                func(args, callback);
+            });
+        }
+
+        function wrapNoArgs(func) {
+            return wrap(func);
+        }
+
         function api(args) {
-            return wrap(FB.api, args);
+            return wrapWithArgs(FB.api, args);
         }
 
         function ui(args) {
-            return wrap(FB.ui, args);
+            return wrapWithArgs(FB.ui, args);
         }
 
         function getAuthResponse() {
@@ -73,6 +67,7 @@ angular.module('facebook', []).factory('$facebook',
         return {
             getAuthResponse: getAuthResponse,
             getLoginStatus: getLogInStatus,
+            login: {},
             init: init,
             api: api,
             ui: ui
