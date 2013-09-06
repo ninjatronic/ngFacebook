@@ -221,5 +221,55 @@ describe('facebook', function() {
                 expect(result).toBeNull();
             });
         });
+
+        describe('-> login', function() {
+            it('should be defined', function() {
+                expect(facebook.login).toBeDefined();
+            });
+
+            it('should call FB.login', function() {
+                spyOn(FB, 'login');
+                facebook.login();
+                expect(FB.login).toHaveBeenCalled();
+            });
+
+            it('should reject errors', function() {
+                var expected = {};
+                spyOn(FB, 'login').andCallFake(function(callback) {
+                    callback(expected);
+                });
+                var result = null;
+                facebook.login().then(null, function(error) {
+                    result = error;
+                });
+                rootScope.$apply();
+                expect(result).toBe(expected);
+            });
+
+            it('should resolve responses', function() {
+                var expected = {authResponse: {}};
+                spyOn(FB, 'login').andCallFake(function(callback) {
+                    callback(expected);
+                });
+                var result = null;
+                facebook.login().then(function(response) {
+                    result = response;
+                });
+                rootScope.$apply();
+                expect(result).toBe(expected);
+            });
+
+            it('should handle null responses as errors', function() {
+                spyOn(FB, 'login').andCallFake(function(callback) {
+                    callback(null);
+                });
+                var result = {};
+                facebook.login().then(null, function(error) {
+                    result = error;
+                });
+                rootScope.$apply();
+                expect(result).toBeNull();
+            });
+        });
     });
 });

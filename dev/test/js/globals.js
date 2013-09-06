@@ -6,5 +6,6 @@ var FB = {
     api: function(args, callback) {},
     ui: function(args, callback) {},
     getAuthResponse: function() {},
-    getLoginStatus: function() {}
+    getLoginStatus: function(callback) {},
+    login: function(callback) {}
 };
