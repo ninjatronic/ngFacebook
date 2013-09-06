@@ -4,6 +4,8 @@ Facebook SDK wrapper for AngularJS Apps.
 
 Currently under active development.
 
+Find the v0.0.1 build [here](../blob/v0.0.1/version/v0.0.1/angular-facebook.min.js).
+
 ## Building
 
 This project uses grunt for tooling. To build, navigate to the root directory and run `grunt build`. The built file is located at `build/angular-facebook.min.js`.
