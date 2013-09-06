@@ -54,6 +54,11 @@ module.exports = function(grunt) {
                 }
             }
         },
+        karma: {
+            jasmine: {
+                configFile: 'dev/test/jasmine.conf.js'
+            }
+        },
         strip: {
             all: {
                 src: 'temp/**/*.js',
@@ -79,6 +84,10 @@ module.exports = function(grunt) {
             }
         },
         watch: {
+            unit: {
+                files: ['Gruntfile.js', 'dev/**/*.*'],
+                tasks: ['jshint', 'karma:jasmine']
+            },
             hint: {
                 files: ['Gruntfile.js', 'dev/**/*.*'],
                 tasks: ['jshint']
@@ -92,9 +101,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-notify');
     grunt.loadNpmTasks('grunt-strip');
 
     grunt.registerTask('build', ['jshint', 'clean:temp', 'strip', 'concat', 'uglify:src', 'clean:build', 'copy:build', 'clean:temp']);
-    grunt.registerTask('default', ['watch:hint']);
+    grunt.registerTask('default', ['watch:unit']);
 };
