@@ -34,7 +34,7 @@ window.fbAsyncInit = function() {
 };
 ```
 ```html
-<html xmlns:ng="yourApp"> // replaces simple ng-app autoloading
+<html xmlns:ng="my-angular-js-app"> // replaces simple ng-app autoloading
 ```
 
 Include the module in your app and initialise it:
