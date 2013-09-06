@@ -271,5 +271,30 @@ describe('facebook', function() {
                 expect(result).toBeNull();
             });
         });
+
+        describe('-> logout', function() {
+            it('should be defined', function() {
+                expect(facebook.logout).toBeDefined();
+            });
+
+            it('should call GB.logout', function() {
+                spyOn(FB, 'logout');
+                facebook.logout();
+                expect(FB.logout).toHaveBeenCalled();
+            });
+
+            it('should always resolve', function() {
+                var expected = null;
+                spyOn(FB, 'logout').andCallFake(function(callback) {
+                    callback(expected);
+                });
+                var result = {};
+                facebook.logout().then(function(response) {
+                    result = response;
+                });
+                rootScope.$apply();
+                expect(result).toBe(expected);
+            });
+        })
     });
 });

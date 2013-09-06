@@ -71,10 +71,15 @@ angular.module('facebook', []).factory('$facebook',
             });
         }
 
+        function logout() {
+            return wrapNoArgs(FB.logout, function() {return false;})
+        }
+
         return {
             getAuthResponse: getAuthResponse,
             getLoginStatus: getLogInStatus,
             login: login,
+            logout: logout,
             init: init,
             api: api,
             ui: ui

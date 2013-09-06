@@ -7,5 +7,6 @@ var FB = {
     ui: function(args, callback) {},
     getAuthResponse: function() {},
     getLoginStatus: function(callback) {},
-    login: function(callback) {}
+    login: function(callback) {},
+    logout: function(callback) {}
 };
