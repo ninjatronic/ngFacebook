@@ -27,7 +27,7 @@ window.fbAsyncInit = function() {
     });
     
     angular.bootstrap(document, ['my-angular-js-app']);
-    };
+};
 ```
 ```html
 <html xmlns:ng="yourApp"> // replaces simple ng-app autoloading
