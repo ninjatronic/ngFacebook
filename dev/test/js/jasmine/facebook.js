@@ -1,18 +1,56 @@
 describe('facebook', function() {
-    beforeEach(module('facebook'));
 
-    var rootScope, window, facebook;
+    describe('-> $facebookProvider', function() {
+        var facebookProvider;
 
-    describe('-> $facebook', function() {
-        beforeEach(inject(function($rootScope, $window, $facebook) {
-            rootScope = $rootScope;
-            window = $window;
-            facebook = $facebook;
-        }));
+        beforeEach(function() {
+            var fakeModule = angular.module('test.config', function() { });
+            fakeModule.config(function($facebookProvider) {
+                facebookProvider = $facebookProvider;
+            });
+            module('facebook', 'test.config');
+            inject(function() {});
+        });
 
         describe('-> init', function() {
             it('should be defined', function() {
-                expect(facebook.init).toBeDefined();
+                expect(facebookProvider.init).toBeDefined();
+            });
+
+            it('should init the Facebook SDK once loaded', function() {
+                var expected = {
+                    appId: 'myAppId',
+                    channel: '//path/to/channel.html'
+                };
+                facebookProvider.init(expected);
+                spyOn(FB, 'init');
+                window.fbAsyncInit();
+                expect(FB.init).toHaveBeenCalledWith(expected);
+            });
+        });
+    });
+
+    describe('-> $facebook', function() {
+        var rootScope, facebook, facebookProvider;
+
+        beforeEach(function() {
+            var fakeModule = angular.module('test.config', function() { });
+            fakeModule.config(function($facebookProvider) {
+                facebookProvider = $facebookProvider;
+            });
+            module('facebook', 'test.config');
+            inject(function($rootScope, $facebook) {
+                facebookProvider.init();
+                rootScope = $rootScope;
+                facebook = $facebook;
+
+                window.fbAsyncInit();
+            })
+        });
+
+        describe('-> subscribe', function() {
+            it('should be defined', function() {
+                expect(facebook.subscribe).toBeDefined();
             });
 
             var events = {
@@ -32,7 +70,7 @@ describe('facebook', function() {
                         spyOn(FB.Event, 'subscribe').andCallFake(function(name) {
                             subscribedEvents.push(name);
                         });
-                        facebook.init();
+                        facebook.subscribe();
                         expect(subscribedEvents).toContain(eventName);
                     });
 
@@ -43,7 +81,7 @@ describe('facebook', function() {
                         spyOn(FB.Event, 'subscribe').andCallFake(function(name, handler) {
                             subscribedEvents[name] = handler;
                         });
-                        facebook.init();
+                        facebook.subscribe();
                         rootScope.$on('facebook.'+eventName, function(event, args) {
                             response = args;
                         });
