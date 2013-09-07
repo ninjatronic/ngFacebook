@@ -17,8 +17,6 @@ This project uses grunt for tooling. To build, navigate to the root directory an
 
 ## Support
 
-[API Quick Reference](../../wiki/API-Quick-Reference)
-
 Currently supported features of the Facebook SDK:
 
 * User Authentication (login, logout etc)
