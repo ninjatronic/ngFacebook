@@ -10,11 +10,3 @@ var FB = {
     login: function(callback) {},
     logout: function(callback) {}
 };
-
-var document = {
-
-};
-
-var window = {
-
-};
