@@ -119,7 +119,6 @@ angular.module('facebook', []).provider('$facebook', function() {
                     getLoginStatus: getLogInStatus,
                     login: login,
                     logout: logout,
-                    subscribe: subscribe,
                     api: api,
                     ui: ui
                 };
