@@ -1,87 +1,125 @@
-angular.module('facebook', []).factory('$facebook',
-    ['$rootScope', '$window', '$q',
-    function($rootScope, $window, $q){
+angular.module('facebook', []).provider('$facebook', function() {
 
-        var events = {
-            auth: ['login', 'authResponseChange', 'statusChange', 'logout', 'prompt'],
-            xfbml: ['render'],
-            edge: ['create', 'remove'],
-            comment: ['create', 'remove'],
-            message: ['send']
-        };
+    var initialised = false;
+    var queue = [];
 
-        function init() {
-            angular.forEach(events, function(events, domain){
-                angular.forEach(events, function(event) {
+    return {
+        init: function (initParams) {
+            window.fbAsyncInit = function() {
+                FB.init(initParams || {status: true, xfbml: true});
+                initialised = true;
+            };
+
+            (function(d, s, id){
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {return;}
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/en_US/all.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        },
+
+        $get: ['$rootScope', '$q',
+            function($rootScope, $q){
+
+                var events = {
+                    auth: ['login', 'authResponseChange', 'statusChange', 'logout', 'prompt'],
+                    xfbml: ['render'],
+                    edge: ['create', 'remove'],
+                    comment: ['create', 'remove'],
+                    message: ['send']
+                };
+
+                function subscribe() {
+                    angular.forEach(events, function(events, domain){
+                        angular.forEach(events, function(event) {
+                            subscribeEvent(domain, event);
+                        });
+                    });
+                }
+
+                function subscribeEvent(domain, event) {
                     FB.Event.subscribe(domain+'.'+event,
                         function(response) {
                             $rootScope.$broadcast('facebook.'+domain+'.'+event, response);
                         }
                     );
-                });
-            });
-        }
+                }
 
-        function wrap(func, errorPredicate) {
-            errorPredicate = errorPredicate || function(response) { return response && response.error; };
-            var deferred = $q.defer();
-            func(function(response){
-                if(errorPredicate(response)) {
-                    $rootScope.$apply(function(){
-                        deferred.reject(response);
-                    });
-                } else {
-                    $rootScope.$apply(function(){
-                        deferred.resolve(response);
+                function defer(func, errorPredicate, deferred) {
+                    func(function(response){
+                        if(errorPredicate(response)) {
+                            $rootScope.$apply(function(){
+                                deferred.reject(response);
+                            });
+                        } else {
+                            $rootScope.$apply(function(){
+                                deferred.resolve(response);
+                            });
+                        }
                     });
                 }
-            });
-            return deferred.promise;
-        }
 
-        function wrapWithArgs(func, args, errorPredicate) {
-            return wrap(function(callback) {
-                func(args, callback);
-            }, errorPredicate);
-        }
+                function wrap(func, errorPredicate) {
+                    errorPredicate = errorPredicate || function(response) { return response && response.error; };
+                    var deferred = $q.defer();
+                    if(initialised) {
+                        defer(func, errorPredicate, deferred);
+                    } else {
+                        queue.push(function() {
+                            defer(func, errorPredicate, deferred);
+                        });
+                    }
+                    return deferred.promise;
+                }
 
-        function wrapNoArgs(func, errorPredicate) {
-            return wrap(func, errorPredicate);
-        }
+                function wrapWithArgs(func, args, errorPredicate) {
+                    return wrap(function(callback) {
+                        func(args, callback);
+                    }, errorPredicate);
+                }
 
-        function api(args) {
-            return wrapWithArgs(FB.api, args);
-        }
+                function wrapNoArgs(func, errorPredicate) {
+                    return wrap(func, errorPredicate);
+                }
 
-        function ui(args) {
-            return wrapWithArgs(FB.ui, args);
-        }
+                function api(args) {
+                    return wrapWithArgs(FB.api, args);
+                }
 
-        function getAuthResponse() {
-            return FB.getAuthResponse();
-        }
+                function ui(args) {
+                    return wrapWithArgs(FB.ui, args);
+                }
 
-        function getLogInStatus() {
-            return wrapNoArgs(FB.getLoginStatus);
-        }
+                function getAuthResponse() {
+                    return FB.getAuthResponse();
+                }
 
-        function login() {
-            return wrapNoArgs(FB.login, function(response) {
-                return !response || !response.authResponse;
-            });
-        }
+                function getLogInStatus() {
+                    return wrapNoArgs(FB.getLoginStatus);
+                }
 
-        function logout() {
-            return wrapNoArgs(FB.logout, function() {return false;})
-        }
+                function login() {
+                    return wrapNoArgs(FB.login, function(response) {
+                        return !response || !response.authResponse;
+                    });
+                }
 
-        return {
-            getAuthResponse: getAuthResponse,
-            getLoginStatus: getLogInStatus,
-            login: login,
-            logout: logout,
-            init: init,
-            api: api,
-            ui: ui
-        };
-    }]);
+                function logout() {
+                    return wrapNoArgs(FB.logout, function() {return false;})
+                }
+
+                subscribe();
+                return {
+                    getAuthResponse: getAuthResponse,
+                    getLoginStatus: getLogInStatus,
+                    login: login,
+                    logout: logout,
+                    subscribe: subscribe,
+                    api: api,
+                    ui: ui
+                };
+            }]
+        }
+    });
