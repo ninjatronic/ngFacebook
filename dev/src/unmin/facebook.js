@@ -8,6 +8,9 @@ angular.module('facebook', []).provider('$facebook', function() {
             window.fbAsyncInit = function() {
                 FB.init(initParams || {status: true, xfbml: true});
                 initialised = true;
+                angular.forEach(queue, function(func) {
+                    func();
+                });
             };
 
             (function(d, s, id){
