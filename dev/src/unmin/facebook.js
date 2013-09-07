@@ -53,26 +53,28 @@ angular.module('facebook', []).provider('$facebook', function() {
                 function defer(func, errorPredicate, deferred) {
                     func(function(response){
                         if(errorPredicate(response)) {
-                            $rootScope.$apply(function(){
+                            if($rootScope.$$phase) {
                                 deferred.reject(response);
-                            });
+                            } else {
+                                $rootScope.$apply(function(){
+                                    deferred.reject(response);
+                                });
+                            }
                         } else {
-                            $rootScope.$apply(function(){
+                            if($rootScope.$$phase) {
                                 deferred.resolve(response);
-                            });
+                            } else {
+                                $rootScope.$apply(function(){
+                                    deferred.resolve(response);
+                                });
+                            }
                         }
                     });
                 }
 
                 function wrap(func, deferred, errorPredicate) {
                     errorPredicate = errorPredicate || function(response) { return response && response.error; };
-                    if(initialised) {
-                        defer(func, errorPredicate, deferred);
-                    } else {
-                        queue.push(function() {
-                            defer(func, errorPredicate, deferred);
-                        });
-                    }
+                    defer(func, errorPredicate, deferred);
                 }
 
                 function wrapWithArgs(func, deferred, args, errorPredicate) {
