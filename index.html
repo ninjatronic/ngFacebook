@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>angular-facebook by ninjatronic</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>angular-facebook</h1>
+        <h2>Facebook SDK wrapper for AngularJS Apps</h2>
+        <a href="https://github.com/ninjatronic/angular-facebook" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a name="angular-facebook" class="anchor" href="#angular-facebook"><span class="octicon octicon-link"></span></a>angular-facebook</h1>
+
+<p><strong>angular-facebook</strong> is a Facebook SDK wrapper for AngularJS Apps. It aims to minimum configuration Facebook support to AngularJS applications.</p>
+
+<h2>
+<a name="builds" class="anchor" href="#builds"><span class="octicon octicon-link"></span></a>Builds</h2>
+
+<p>To plug-and-play with <strong>angular-facebook</strong> just drop the latest build into your project and follow the usage instructions below.</p>
+
+<table>
+<thead><tr>
+<th>Version</th>
+<th>Readme</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><a href="../../blob/v0.0.1/version/v0.0.1/angular-facebook.min.js">v0.0.1</a></td>
+<td><a href="../../blob/v0.0.1/README.md">Readme</a></td>
+</tr>
+<tr>
+<td><a href="../../blob/v0.0.2/version/v0.0.2/angular-facebook.min.js">v0.0.2</a></td>
+<td><a href="../../blob/v0.0.2/README.md">Readme</a></td>
+</tr>
+</tbody>
+</table><h2>
+<a name="support" class="anchor" href="#support"><span class="octicon octicon-link"></span></a>Support</h2>
+
+<p>Currently supported features of the Facebook SDK:</p>
+
+<ul>
+<li>User Authentication (login, logout etc)</li>
+<li>Graph API</li>
+<li>UI</li>
+</ul><h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a name="initialisation" class="anchor" href="#initialisation"><span class="octicon octicon-link"></span></a>Initialisation</h3>
+
+<p>Include the module in your app and initialise it during the application config block in the same manner you would initialise the FB SDK:</p>
+
+<div class="highlight"><pre><span class="nx">angular</span>
+    <span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">'my-angularjs-app'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'facebook'</span><span class="p">])</span>
+    <span class="p">.</span><span class="nx">config</span><span class="p">([</span><span class="s1">'$facebookProvider'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$facebookProvider</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">$facebookProvider</span><span class="p">.</span><span class="nx">init</span><span class="p">({</span>
+            <span class="nx">appId</span><span class="o">:</span> <span class="s1">'myFbApplicationId'</span><span class="p">,</span>
+            <span class="nx">channel</span><span class="o">:</span> <span class="s1">'//path/to/channel.html'</span>
+        <span class="p">});</span>
+    <span class="p">}]);</span>
+</pre></div>
+
+<h3>
+<a name="methods" class="anchor" href="#methods"><span class="octicon octicon-link"></span></a>Methods</h3>
+
+<p>Use <code>$facebook</code> much as you would <code>FB</code>. Calls are the same as to the traditional <code>FB</code> object, except that they use promises instead of callbacks.</p>
+
+<div class="highlight"><pre><span class="nx">angular</span>
+    <span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">'my-angularjs-app'</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">'my-controller'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'$facebook'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$facebook</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// bind directly to the response promise</span>
+        <span class="nx">$scope</span><span class="p">.</span><span class="nx">loginStatus</span> <span class="o">=</span> <span class="nx">$facebook</span><span class="p">.</span><span class="nx">getLoginStatus</span><span class="p">();</span>
+
+        <span class="c1">// use the promise in code</span>
+        <span class="nx">$facebook</span><span class="p">.</span><span class="nx">getLoginStatus</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span>
+            <span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">$scope</span><span class="p">.</span><span class="nx">loginResponse</span> <span class="o">=</span> <span class="nx">response</span><span class="p">;</span>
+            <span class="p">},</span>
+            <span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">$scope</span><span class="p">.</span><span class="nx">loginError</span> <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">error</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">);</span>
+    <span class="p">}]);</span>
+</pre></div>
+
+<p>The one exception to this is <code>$facebook.getAuthResponse</code> which is synchronous.</p>
+
+<h3>
+<a name="events" class="anchor" href="#events"><span class="octicon octicon-link"></span></a>Events</h3>
+
+<p>Events from the facebook SDK are then broadcast through the $rootScope of the application. The naming convention is to use the same event name as the Facebook SDK, prepended with 'facebook.' - so 'auth.authResponseChange' is broadcast as 'facebook.auth.authResponseChange. Consume these events as you would any other angular event:</p>
+
+<div class="highlight"><pre><span class="nx">angular</span>
+    <span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">'my-angularjs-app'</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">'another-controller'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'$scope'</span><span class="p">,</span> <span class="s1">'$facebook'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">$facebook</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">$scope</span><span class="p">.</span><span class="nx">$on</span><span class="p">(</span><span class="s1">'facebook.auth.authResponseChange'</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">$scope</span><span class="p">.</span><span class="nx">authStatus</span> <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">status</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}]);</span>
+</pre></div>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/ninjatronic/angular-facebook/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/ninjatronic/angular-facebook/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/ninjatronic/angular-facebook"></a> is maintained by <a href="https://github.com/ninjatronic">ninjatronic</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
