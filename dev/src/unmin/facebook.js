@@ -64,9 +64,8 @@ angular.module('facebook', []).provider('$facebook', function() {
                     });
                 }
 
-                function wrap(func, errorPredicate) {
+                function wrap(func, deferred, errorPredicate) {
                     errorPredicate = errorPredicate || function(response) { return response && response.error; };
-                    var deferred = $q.defer();
                     if(initialised) {
                         defer(func, errorPredicate, deferred);
                     } else {
@@ -74,25 +73,40 @@ angular.module('facebook', []).provider('$facebook', function() {
                             defer(func, errorPredicate, deferred);
                         });
                     }
-                    return deferred.promise;
                 }
 
-                function wrapWithArgs(func, args, errorPredicate) {
-                    return wrap(function(callback) {
+                function wrapWithArgs(func, deferred, args, errorPredicate) {
+                    wrap(function(callback) {
                         func(args, callback);
-                    }, errorPredicate);
+                    }, deferred, errorPredicate);
                 }
 
-                function wrapNoArgs(func, errorPredicate) {
-                    return wrap(func, errorPredicate);
+                function wrapNoArgs(func, deferred, errorPredicate) {
+                    wrap(func, deferred, errorPredicate);
                 }
 
                 function api(args) {
-                    return wrapWithArgs(FB.api, args);
+                    var deferred = $q.defer();
+                    if(initialised) {
+                        wrapWithArgs(FB.api, deferred, args);
+                    } else {
+                        queue.push(function() {
+                            wrapWithArgs(FB.api, deferred, args);
+                        });
+                    }
+                    return deferred.promise;
                 }
 
                 function ui(args) {
-                    return wrapWithArgs(FB.ui, args);
+                    var deferred = $q.defer();
+                    if(initialised) {
+                        wrapWithArgs(FB.ui, deferred, args);
+                    } else {
+                        queue.push(function() {
+                            wrapWithArgs(FB.ui, deferred, args);
+                        });
+                    }
+                    return deferred.promise;
                 }
 
                 function getAuthResponse() {
@@ -100,20 +114,47 @@ angular.module('facebook', []).provider('$facebook', function() {
                 }
 
                 function getLogInStatus() {
-                    return wrapNoArgs(FB.getLoginStatus);
+                    var deferred = $q.defer();
+                    if(initialised) {
+                        wrapNoArgs(FB.getLoginStatus, deferred);
+                    } else {
+                        queue.push(function() {
+                            wrapNoArgs(FB.getLoginStatus, deferred);
+                        });
+                    }
+                    return deferred.promise;
                 }
 
                 function login() {
-                    return wrapNoArgs(FB.login, function(response) {
-                        return !response || !response.authResponse;
-                    });
+                    var deferred = $q.defer();
+                    if(initialised) {
+                        wrapNoArgs(FB.login, deferred, function(response) {return !response || !response.authResponse;});
+                    } else {
+                        queue.push(function() {
+                            wrapNoArgs(FB.login, deferred);
+                        });
+                    }
+                    return deferred.promise;
                 }
 
                 function logout() {
-                    return wrapNoArgs(FB.logout, function() {return false;})
+                    var deferred = $q.defer();
+                    if(initialised) {
+                        wrapNoArgs(FB.logout, deferred, function() {return false;});
+                    } else {
+                        queue.push(function() {
+                            wrapNoArgs(FB.logout, deferred, function() {return false;});
+                        });
+                    }
+                    return deferred.promise;
                 }
 
-                subscribe();
+                if(initialised) {
+                    subscribe();
+                } else {
+                    queue.push(subscribe);
+                }
+
                 return {
                     getAuthResponse: getAuthResponse,
                     getLoginStatus: getLogInStatus,
@@ -123,5 +164,5 @@ angular.module('facebook', []).provider('$facebook', function() {
                     ui: ui
                 };
             }]
-        }
-    });
+    }
+});
