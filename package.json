@@ -19,6 +19,7 @@
     "name": "angular-facebook",
     "version": "0.0.3",
     "scripts": {
-        "test": "grunt test"
+        "test": "grunt test",
+        "build": "grunt build"
     }
 }
