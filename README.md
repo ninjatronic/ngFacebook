@@ -1,12 +1,12 @@
 # angular-facebook
 
-"!https://travis-ci.org/ninjatronic/angular-facebook.png!":https://travis-ci.org/ninjatronic/facebook
+[![Build Status](https://travis-ci.org/ninjatronic/angular-facebook.png)](https://travis-ci.org/ninjatronic/angular-facebook)
 
 Facebook SDK wrapper for AngularJS Apps.
 
 Currently under active development.
 
-Builds:
+Versions:
 
 | Version                                                            | Readme                                |
 | ------------------------------------------------------------------ | ------------------------------------- |
