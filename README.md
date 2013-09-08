@@ -19,4 +19,4 @@ This project uses grunt for tooling. To run the tests run `grunt test`. To build
 
 ## Usage
 
-For usage instructions, please see the [http://ninjatronic.github.io/angular-facebook/](Github page) for this project.
+For usage instructions, please see the [Github page](http://ninjatronic.github.io/angular-facebook/) for this project.
