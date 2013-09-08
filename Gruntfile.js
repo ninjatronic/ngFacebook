@@ -105,6 +105,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-notify');
     grunt.loadNpmTasks('grunt-strip');
 
+    grunt.registerTask('test', ['jshint', 'karma:jasmine']);
     grunt.registerTask('build', ['jshint', 'karma:jasmine', 'clean:temp', 'strip', 'concat', 'uglify:src', 'clean:build', 'copy:build', 'clean:temp']);
     grunt.registerTask('default', ['watch:unit']);
 };

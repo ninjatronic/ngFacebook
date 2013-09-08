@@ -160,8 +160,8 @@ angular.module('facebook', []).provider('$facebook', function() {
                 return {
                     getAuthResponse: getAuthResponse,
                     getLoginStatus: getLogInStatus,
-                    login: login,
                     logout: logout,
+                    login: login,
                     api: api,
                     ui: ui
                 };
