@@ -2,6 +2,9 @@
     "author": "Ninjatronic",
     "devDependencies": {
         "grunt": "",
+        "grunt-cli": "",
+        "phantom": "",
+        "phantomjs": "",
         "grunt-contrib-clean": "",
         "grunt-contrib-copy": "",
         "grunt-contrib-jshint": "",
