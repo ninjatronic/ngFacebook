@@ -112,7 +112,11 @@ angular.module('facebook', []).provider('$facebook', function() {
                 }
 
                 function getAuthResponse() {
-                    return FB.getAuthResponse();
+                    if(initialised) {
+                        return FB.getAuthResponse();
+                    } else {
+                        return null;
+                    }
                 }
 
                 function getLogInStatus() {

@@ -222,9 +222,7 @@ describe('facebook', function() {
                 });
 
                 it('should return FB.getAuthResponse()', function() {
-                    var expected = {result:'response'};
-                    spyOn(FB, 'getAuthResponse').andReturn(expected);
-                    expect(facebook.getAuthResponse()).toBe(expected);
+                    expect(facebook.getAuthResponse()).toBe(null);
                 });
             });
 
