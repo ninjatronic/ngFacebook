@@ -133,7 +133,7 @@ angular.module('facebook', []).provider('$facebook', function() {
                         wrapNoArgs(FB.login, deferred, function(response) {return !response || !response.authResponse;});
                     } else {
                         queue.push(function() {
-                            wrapNoArgs(FB.login, deferred);
+                            wrapNoArgs(FB.login, deferred, function(response) {return !response || !response.authResponse;});
                         });
                     }
                     return deferred.promise;
