@@ -17,6 +17,8 @@
         "grunt-text-replace": ""
     },
     "name": "angular-facebook",
+    "description": "Facebook SDK wrapper for AngularJS Apps",
+    "license": "MIT",
     "version": "0.0.3",
     "scripts": {
         "test": "grunt test",

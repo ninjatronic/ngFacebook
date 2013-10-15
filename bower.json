@@ -1,0 +1,24 @@
+{
+    "name": "angular-facebook",
+    "version": "0.0.3",
+    "description": "Facebook SDK wrapper for AngularJS Apps",
+    "homepage": "https://github.com/ninjatronic/angular-facebook",
+    "authors": [
+        "Pete Martin <pete@ninjatronic.com>"
+    ],
+    "keywords": [
+        "facebook",
+        "angularjs",
+        "sdk",
+        "auth"
+    ],
+    "license": "MIT",
+    "main": "dev/src/unmin/angular-angular-facebook.js",
+    "dependencies": {
+        "angular": ">= 1.0.8"
+    },
+    "devDependencies": {
+        "angular": ">= 1.0.8",
+        "angular-mocks": ">= 1.0.8"
+    }
+}

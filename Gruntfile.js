@@ -73,13 +73,13 @@ module.exports = function(grunt) {
             },
             dist: {
                 src: ['dev/src/unmin/**/*.js'],
-                dest: 'temp/angular-facebook.js'
+                dest: 'temp/angular-angular-angular-facebook.js'
             }
         },
         uglify: {
             src: {
                 files: {
-                    'temp/angular-facebook.min.js': ['temp/angular-facebook.js']
+                    'temp/angular-facebook.min.js': ['temp/angular-angular-angular-facebook.js']
                 }
             }
         },

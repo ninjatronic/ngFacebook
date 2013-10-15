@@ -1,15 +1,15 @@
 module.exports = function(config) {
     config.set({
         singleRun: true,
-        basePath: '../',
+        basePath: '../../',
         browsers: ['PhantomJS'],
         frameworks: ['jasmine'],
         files: [
-            'test/js/globals.js',
-            'test/js/angular.js',
-            'test/js/angular-mocks.js',
-            'test/js/jasmine/**/*.js',
-            'src/**/*.js'
+            'dev/test/js/globals.js',
+            'bower_components/angular/angular.js',
+            'bower_components/angular-mocks/angular-mocks.js',
+            'dev/test/js/jasmine/**/*.js',
+            'dev/src/**/*.js'
         ]
     });
 };
