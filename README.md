@@ -12,7 +12,7 @@ Versions:
 | ------------------------------------------------------------------ | ------------------------------------- |
 | [v0.0.1 (angular-facebook)](../../blob/v0.0.1/version/v0.0.1/angular-facebook.min.js) | [Readme](../../blob/v0.0.1/README.md) |
 | [v0.0.2 (angular-facebook)](../../blob/v0.0.2/version/v0.0.2/angular-facebook.min.js) | [Readme](../../blob/v0.0.2/README.md) |
-| [v0.0.3](../../blob/v0.0.3/version/v0.0.2/ngFacebook.min.js) | [Readme](../../blob/v0.0.3/README.md) |
+| [v0.0.3](../../blob/v0.0.3/version/v0.0.3/ngFacebook.min.js) | [Readme](../../blob/v0.0.3/README.md) |
 
 ## Tooling
 
