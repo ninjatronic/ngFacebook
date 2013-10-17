@@ -16,7 +16,7 @@
         "grunt-strip": "",
         "grunt-text-replace": ""
     },
-    "name": "angular-facebook",
+    "name": "ngFacebook",
     "description": "Facebook SDK wrapper for AngularJS Apps",
     "license": "MIT",
     "version": "0.0.3",

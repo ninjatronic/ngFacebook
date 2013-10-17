@@ -12,7 +12,7 @@ module.exports = function(grunt) {
                 cwd: 'temp/',
                 dest: 'build/',
                 expand: true,
-                src: ['angular-facebook.min.js']
+                src: ['ngFacebook.min.js']
             }
         },
         jshint: {
@@ -73,13 +73,13 @@ module.exports = function(grunt) {
             },
             dist: {
                 src: ['dev/src/unmin/**/*.js'],
-                dest: 'temp/angular-angular-angular-facebook.js'
+                dest: 'temp/ngFacebook.js'
             }
         },
         uglify: {
             src: {
                 files: {
-                    'temp/angular-facebook.min.js': ['temp/angular-angular-angular-facebook.js']
+                    'temp/ngFacebook.min.js': ['temp/ngFacebook.js']
                 }
             }
         },
