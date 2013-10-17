@@ -26,10 +26,10 @@ For usage instructions, please see the [Github page](http://ninjatronic.github.i
 
 ## Development
 
-## Tooling
+### Tooling
 
 This project uses grunt for tooling. To run the tests run `grunt test`. To build, navigate to the root directory and run `grunt build`.
 
-## Contributions
+### Contributions
 
 ngFacebook actively welcomes contributions. Please submit a pull request or raise an issue with a test that demonstrates the bug/feature.
