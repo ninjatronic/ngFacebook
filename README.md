@@ -4,20 +4,32 @@
 
 Facebook SDK wrapper for AngularJS Apps.
 
-Currently under active development.
+## Installation
 
-Versions:
+### Bower
 
-| Version                                                            | Readme                                |
-| ------------------------------------------------------------------ | ------------------------------------- |
-| [v0.0.1 (angular-facebook)](../../blob/v0.0.1/version/v0.0.1/angular-facebook.min.js) | [Readme](../../blob/v0.0.1/README.md) |
-| [v0.0.2 (angular-facebook)](../../blob/v0.0.2/version/v0.0.2/angular-facebook.min.js) | [Readme](../../blob/v0.0.2/README.md) |
-| [v0.0.3](../../blob/v0.0.3/version/v0.0.3/ngFacebook.min.js) | [Readme](../../blob/v0.0.3/README.md) |
+`bower install ngFacebook`
+
+```html
+ <script src="bower_components/angular/angular.min.js"></script>
+ <script src="bower_components/ngFacebook/version/v0.0.3/ngFacebook.min.js"></script>
+```
+
+### Manual
+
+Download the [minified source](../../blob/v0.0.3/version/v0.0.3/ngFacebook.min.js) and include in your build as desired.
+
+
+## Usage
+
+For usage instructions, please see the [Github page](http://ninjatronic.github.io/ngFacebook/) for this project.
+
+## Development
 
 ## Tooling
 
 This project uses grunt for tooling. To run the tests run `grunt test`. To build, navigate to the root directory and run `grunt build`.
 
-## Usage
+## Contributions
 
-For usage instructions, please see the [Github page](http://ninjatronic.github.io/ngFacebook/) for this project.
+ngFacebook actively welcomes contributions. Please submit a pull request or raise an issue with a test that demonstrates the bug/feature.
