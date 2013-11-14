@@ -141,14 +141,14 @@ angular.module('facebook', []).provider('$facebook', function() {
                     var deferred = $q.defer();
                     if(initialised) {
                         if (opts) {
-                            wrapWithArgs(FB.login, deferred, opts, function(response) {return !response || !response.authResponse;});
+                            wrapWithOptions(FB.login, deferred, opts, function(response) {return !response || !response.authResponse;});
                         } else {
                             wrapNoArgs(FB.login, deferred, function(response) {return !response || !response.authResponse;});
                         }
                     } else {
                         if (opts) {
                             queue.push(function() {
-                                wrapWithArgs(FB.login, deferred, opts, function(response) {return !response || !response.authResponse;});
+                                wrapWithOptions(FB.login, deferred, opts, function(response) {return !response || !response.authResponse;});
                             });
                         } else {
                             queue.push(function() {
