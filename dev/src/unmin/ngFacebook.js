@@ -83,6 +83,12 @@ angular.module('facebook', []).provider('$facebook', function() {
                     }, deferred, errorPredicate);
                 }
 
+                function wrapWithOptions(func, deferred, opts, errorPredicate) {
+                    wrap(function(callback) {
+                        func(callback, opts);
+                    }, deferred, errorPredicate);
+                }
+
                 function wrapNoArgs(func, deferred, errorPredicate) {
                     wrap(func, deferred, errorPredicate);
                 }
