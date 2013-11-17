@@ -286,6 +286,13 @@ describe('facebook', function() {
                     expect(FB.login).toHaveBeenCalled();
                 });
 
+                it('should call FB.login with args', function() {
+                    spyOn(FB, 'login');
+                    facebook.login('args');
+                    window.fbAsyncInit();
+                    expect(FB.login.mostRecentCall.args[1]).toBe('args');
+                });
+
                 it('should reject errors', function() {
                     var expected = {};
                     spyOn(FB, 'login').andCallFake(function(callback) {
