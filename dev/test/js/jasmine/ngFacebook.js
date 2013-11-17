@@ -108,13 +108,10 @@ describe('facebook', function() {
                 });
 
                 it('should call FB.api with args', function() {
-                    var thruArgs = null;
-                    spyOn(FB, 'api').andCallFake(function(args){
-                        thruArgs = args;
-                    });
+                    spyOn(FB, 'api');
                     facebook.api('/me');
                     window.fbAsyncInit();
-                    expect(thruArgs).toBe('/me');
+                    expect(FB.api.mostRecentCall.args[0]).toBe('/me');
                 });
 
                 it('should reject errors', function() {
@@ -165,13 +162,10 @@ describe('facebook', function() {
                 });
 
                 it('should call FB.ui with args', function() {
-                    var thruArgs = null;
-                    spyOn(FB, 'ui').andCallFake(function(args){
-                        thruArgs = args;
-                    });
+                    spyOn(FB, 'ui');
                     facebook.ui('args');
                     window.fbAsyncInit();
-                    expect(thruArgs).toBe('args');
+                    expect(FB.ui.mostRecentCall.args[0]).toBe('args');
                 });
 
                 it('should reject errors', function() {
@@ -231,7 +225,7 @@ describe('facebook', function() {
                     expect(facebook.getLoginStatus).toBeDefined();
                 });
 
-                it('should call FB.getLoginStatus with args', function() {
+                it('should call FB.getLoginStatus', function() {
                     spyOn(FB, 'getLoginStatus');
                     facebook.getLoginStatus();
                     window.fbAsyncInit();
@@ -379,12 +373,9 @@ describe('facebook', function() {
                 });
 
                 it('should call FB.api with args', function() {
-                    var thruArgs = null;
-                    spyOn(FB, 'api').andCallFake(function(args){
-                        thruArgs = args;
-                    });
+                    spyOn(FB, 'api');
                     facebook.api('/me');
-                    expect(thruArgs).toBe('/me');
+                    expect(FB.api.mostRecentCall.args[0]).toBe('/me');
                 });
 
                 it('should reject errors', function() {
@@ -432,12 +423,9 @@ describe('facebook', function() {
                 });
 
                 it('should call FB.ui with args', function() {
-                    var thruArgs = null;
-                    spyOn(FB, 'ui').andCallFake(function(args){
-                        thruArgs = args;
-                    });
+                    spyOn(FB, 'ui');
                     facebook.ui('args');
-                    expect(thruArgs).toBe('args');
+                    expect(FB.ui.mostRecentCall.args[0]).toBe('args');
                 });
 
                 it('should reject errors', function() {
@@ -496,7 +484,7 @@ describe('facebook', function() {
                     expect(facebook.getLoginStatus).toBeDefined();
                 });
 
-                it('should call FB.getLoginStatus with args', function() {
+                it('should call FB.getLoginStatus', function() {
                     spyOn(FB, 'getLoginStatus');
                     facebook.getLoginStatus();
                     expect(FB.getLoginStatus).toHaveBeenCalled();
