@@ -83,6 +83,12 @@ angular.module('facebook', []).provider('$facebook', function() {
                     }, deferred, errorPredicate);
                 }
 
+                function wrapWithOptions(func, deferred, opts, errorPredicate) {
+                    wrap(function(callback) {
+                        func(callback, opts);
+                    }, deferred, errorPredicate);
+                }
+
                 function wrapNoArgs(func, deferred, errorPredicate) {
                     wrap(func, deferred, errorPredicate);
                 }
@@ -131,14 +137,24 @@ angular.module('facebook', []).provider('$facebook', function() {
                     return deferred.promise;
                 }
 
-                function login() {
+                function login(opts) {
                     var deferred = $q.defer();
                     if(initialised) {
-                        wrapNoArgs(FB.login, deferred, function(response) {return !response || !response.authResponse;});
-                    } else {
-                        queue.push(function() {
+                        if (opts) {
+                            wrapWithOptions(FB.login, deferred, opts, function(response) {return !response || !response.authResponse;});
+                        } else {
                             wrapNoArgs(FB.login, deferred, function(response) {return !response || !response.authResponse;});
-                        });
+                        }
+                    } else {
+                        if (opts) {
+                            queue.push(function() {
+                                wrapWithOptions(FB.login, deferred, opts, function(response) {return !response || !response.authResponse;});
+                            });
+                        } else {
+                            queue.push(function() {
+                                wrapNoArgs(FB.login, deferred, function(response) {return !response || !response.authResponse;});
+                            });
+                        }
                     }
                     return deferred.promise;
                 }
