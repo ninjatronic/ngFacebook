@@ -78,8 +78,11 @@ angular.module('facebook', []).provider('$facebook', function() {
                 }
 
                 function wrapWithArgs(func, deferred, args, errorPredicate) {
+                    var argsArray = Array.prototype.slice.call(args, 0);
+
                     wrap(function(callback) {
-                        func(args, callback);
+                        argsArray.push(callback);
+                        func.apply(FB, argsArray);
                     }, deferred, errorPredicate);
                 }
 
@@ -93,25 +96,27 @@ angular.module('facebook', []).provider('$facebook', function() {
                     wrap(func, deferred, errorPredicate);
                 }
 
-                function api(args) {
+                function api() {
                     var deferred = $q.defer();
+                    var apiArguments = arguments;
                     if(initialised) {
-                        wrapWithArgs(FB.api, deferred, args);
+                        wrapWithArgs(FB.api, deferred, apiArguments );
                     } else {
                         queue.push(function() {
-                            wrapWithArgs(FB.api, deferred, args);
+                            wrapWithArgs(FB.api, deferred, apiArguments );
                         });
                     }
                     return deferred.promise;
                 }
 
-                function ui(args) {
+                function ui() {
                     var deferred = $q.defer();
+                    var uiArguments = arguments;
                     if(initialised) {
-                        wrapWithArgs(FB.ui, deferred, args);
+                        wrapWithArgs(FB.ui, deferred, uiArguments);
                     } else {
                         queue.push(function() {
-                            wrapWithArgs(FB.ui, deferred, args);
+                            wrapWithArgs(FB.ui, deferred, uiArguments);
                         });
                     }
                     return deferred.promise;

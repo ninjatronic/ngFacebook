@@ -109,9 +109,10 @@ describe('facebook', function() {
 
                 it('should call FB.api with args', function() {
                     spyOn(FB, 'api');
-                    facebook.api('/me');
+                    facebook.api('/me', 'post');
                     window.fbAsyncInit();
                     expect(FB.api.mostRecentCall.args[0]).toBe('/me');
+                    expect(FB.api.mostRecentCall.args[1]).toBe('post');
                 });
 
                 it('should reject errors', function() {
@@ -163,9 +164,10 @@ describe('facebook', function() {
 
                 it('should call FB.ui with args', function() {
                     spyOn(FB, 'ui');
-                    facebook.ui('args');
+                    facebook.ui('args1', 'args2');
                     window.fbAsyncInit();
-                    expect(FB.ui.mostRecentCall.args[0]).toBe('args');
+                    expect(FB.ui.mostRecentCall.args[0]).toBe('args1');
+                    expect(FB.ui.mostRecentCall.args[1]).toBe('args2');
                 });
 
                 it('should reject errors', function() {
