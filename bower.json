@@ -1,6 +1,6 @@
 {
     "name": "ngFacebook",
-    "version": "0.0.3",
+    "version": "0.0.5",
     "description": "Facebook SDK wrapper for AngularJS Apps",
     "homepage": "https://github.com/ninjatronic/ngFacebook",
     "authors": [
