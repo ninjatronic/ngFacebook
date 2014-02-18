@@ -175,6 +175,16 @@ angular.module('facebook', []).provider('$facebook', function() {
                     }
                     return deferred.promise;
                 }
+                
+                function parse() {
+                    if(initialised) {
+                        FB.XFBML.parse()
+                    } else {
+                        queue.push(function() {
+                            FB.XFBML.parse()
+                        })
+                    }
+                }
 
                 if(initialised) {
                     subscribe();
@@ -188,7 +198,8 @@ angular.module('facebook', []).provider('$facebook', function() {
                     logout: logout,
                     login: login,
                     api: api,
-                    ui: ui
+                    ui: ui,
+                    parse: parse
                 };
             }]
     }

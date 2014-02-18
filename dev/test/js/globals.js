@@ -8,7 +8,10 @@ var FB = {
     getAuthResponse: function() {},
     getLoginStatus: function(callback) {},
     login: function(callback) {},
-    logout: function(callback) {}
+    logout: function(callback) {}, 
+    XFBML: {
+        parse: function() {}
+    }
 };
 
 var document = {
