@@ -342,7 +342,7 @@ describe('facebook', function() {
                     expect(facebook.logout).toBeDefined();
                 });
 
-                it('should call GB.logout', function() {
+                it('should call FB.logout', function() {
                     spyOn(FB, 'logout');
                     facebook.logout();
                     window.fbAsyncInit();
@@ -361,6 +361,23 @@ describe('facebook', function() {
                     window.fbAsyncInit();
                     rootScope.$apply();
                     expect(result).toBe(expected);
+                });
+            });
+
+            describe('-> parse', function() {
+                it('should be defined', function() {
+                    expect(facebook.parse).toBeDefined();
+                });
+
+                it('should call FB.XFBML.parse', function() {
+                    spyOn(FB.XFBML, 'parse');
+                    facebook.parse();
+                    window.fbAsyncInit();
+                    expect(FB.XFBML.parse).toHaveBeenCalled();
+                });
+
+                it('should return undefined', function() {
+                    expect(facebook.parse()).toBeUndefined();
                 });
             });
         });
@@ -610,6 +627,22 @@ describe('facebook', function() {
                     });
                     rootScope.$apply();
                     expect(result).toBe(expected);
+                });
+            });
+
+            describe('-> parse', function() {
+                it('should be defined', function() {
+                    expect(facebook.parse).toBeDefined();
+                });
+
+                it('should call FB.XFBML.parse', function() {
+                    spyOn(FB.XFBML, 'parse');
+                    facebook.parse();
+                    expect(FB.XFBML.parse).toHaveBeenCalled();
+                });
+
+                it('should return undefined', function() {
+                    expect(facebook.parse()).toBeUndefined();
                 });
             });
         });
