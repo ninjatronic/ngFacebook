@@ -64,6 +64,7 @@
 <li>User Authentication (login, logout etc)</li>
 <li>Graph API</li>
 <li>UI</li>
+<li>XFBML.parse</li>
 </ul><h2>
 <a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
 
@@ -120,6 +121,24 @@
         <span class="p">}</span>
     <span class="p">}]);</span>
 </pre></div>
+
+<h3><a name="parse" class="anchor" href="#parse"><span class="octicon octicon-link"></span></a>XFBML.parse</h3>
+
+<p>When the Facebook SDK loads, it parses FBML mark up on the page and renders it in the browser (e.g. <code>fb:activity</code>, <code>fb:login</code>, etc). However, in an Angular app that uses routing (such as ngRoute or angular-ui-routing), when a new view loads this parser doesn't automatically run. Instead you need to manually call the <code>FB.XFBML.parse()</code> in order to render the FBML elements.</p>
+<p>The <code>$facebook.parse()</code> method wraps this function so that you can render FBML elements.</p>
+
+<div class="highlight highlight-javascript">
+  <pre>
+angular
+    .module(<span class="s1">'my-angularjs-app'</span>)
+    .controller(<span class="s1">'my-controller'</span>, [<span class="s1">'$facebook'</span>, <span class="kd">function</span>($facebook) {
+        <span class="c">// Render FBML elements</span>
+        $facebook.parse();
+    }]);
+  </pre>
+</div>
+
+
       </section>
     </div>
 
