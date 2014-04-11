@@ -186,6 +186,29 @@ angular.module('facebook', []).provider('$facebook', function() {
                     }
                 }
 
+                function canvasSetSize(sizeObject){
+
+                    function setSize(sizeObject){
+                        if(sizeObject && sizeObject.width && sizeObject.height){
+                            FB.Canvas.setSize({width: sizeObject.width, height: sizeObject.height});
+                        } else {
+                            FB.Canvas.setSize();
+                        }
+                    }
+
+                    if(initialised) {
+                        setSize(sizeObject);
+                    } else {
+                        queue.push(function() {
+                            setSize(sizeObject);
+                        })
+                    }
+                }
+
+                function canvasSetAutoGrow(){
+                    FB.Canvas.setAutoGrow();
+                }
+
                 if(initialised) {
                     subscribe();
                 } else {
@@ -199,7 +222,9 @@ angular.module('facebook', []).provider('$facebook', function() {
                     login: login,
                     api: api,
                     ui: ui,
-                    parse: parse
+                    parse: parse,
+                    canvasSetSize: canvasSetSize,
+                    canvasSetAutoGrow: canvasSetAutoGrow
                 };
             }]
     }
