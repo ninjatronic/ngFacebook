@@ -2,9 +2,9 @@
 <html>
 
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="ngFacebook : Facebook SDK wrapper for AngularJS Apps" />
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="ngFacebook : Facebook SDK wrapper for AngularJS Apps">
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
@@ -34,29 +34,13 @@
         <p><strong>ngFacebook</strong> is a Facebook SDK wrapper for AngularJS Apps. It aims to minimum configuration Facebook support to AngularJS applications.</p>
 
 <h2>
-<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
 
-<h3>
-<a name="bower" class="anchor" href="#bower"><span class="octicon octicon-link"></span></a>Bower</h3>
-
-<p>Install the <code>ngFacebook</code> package through Bower...</p>
-
-<pre><code>bower install ngFacebook
+<pre><code>bower install --save ngFacebook
 </code></pre>
 
-<p>Include the sources in your HTML...</p>
-
-<div class="highlight highlight-html"><pre> <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"bower_components/angular/angular.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
- <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"bower_components/ngFacebook/version/v0.0.3/ngFacebook.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-</pre></div>
-
-<h3>
-<a name="manual" class="anchor" href="#manual"><span class="octicon octicon-link"></span></a>Manual</h3>
-
-<p>Download the <a href="https://github.com/ninjatronic/angular-facebook/blob/v0.0.3/version/v0.0.3/ngFacebook.min.js">minified source</a> and include in your build as desired.</p>
-
 <h2>
-<a name="support" class="anchor" href="#support"><span class="octicon octicon-link"></span></a>Support</h2>
+<a id="support" class="anchor" href="#support" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support</h2>
 
 <p>Currently supported features of the Facebook SDK:</p>
 
@@ -65,80 +49,74 @@
 <li>Graph API</li>
 <li>UI</li>
 <li>XFBML.parse</li>
-</ul><h2>
-<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+</ul>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
 
 <h3>
-<a name="initialisation" class="anchor" href="#initialisation"><span class="octicon octicon-link"></span></a>Initialisation</h3>
+<a id="initialisation" class="anchor" href="#initialisation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Initialisation</h3>
 
 <p>Include the module in your app and initialise it during the application config block in the same manner you would initialise the FB SDK:</p>
 
-<div class="highlight highlight-javascript"><pre><span class="nx">angular</span>
-    <span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">'my-angularjs-app'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'facebook'</span><span class="p">])</span>
-    <span class="p">.</span><span class="nx">config</span><span class="p">([</span><span class="s1">'$facebookProvider'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$facebookProvider</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">$facebookProvider</span><span class="p">.</span><span class="nx">init</span><span class="p">({</span>
-            <span class="nx">appId</span><span class="o">:</span> <span class="s1">'myFbApplicationId'</span><span class="p">,</span>
-            <span class="nx">channel</span><span class="o">:</span> <span class="s1">'//path/to/channel.html'</span>
-        <span class="p">});</span>
-    <span class="p">}]);</span>
-</pre></div>
+<div class="highlight highlight-javascript"><pre>angular
+    .module(<span class="pl-s1"><span class="pl-pds">'</span>my-angularjs-app<span class="pl-pds">'</span></span>, [<span class="pl-s1"><span class="pl-pds">'</span>facebook<span class="pl-pds">'</span></span>])
+    .config([<span class="pl-s1"><span class="pl-pds">'</span>$facebookProvider<span class="pl-pds">'</span></span>, <span class="pl-st">function</span>(<span class="pl-vpf">$facebookProvider</span>) {
+        $facebookProvider.init({
+            appId<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>myFbApplicationId<span class="pl-pds">'</span></span>,
+            channel<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>//path/to/channel.html<span class="pl-pds">'</span></span>
+        });
+    }]);
 
-<h3>
-<a name="methods" class="anchor" href="#methods"><span class="octicon octicon-link"></span></a>Methods</h3>
+### Methods
+Use <span class="pl-s1"><span class="pl-pds">`</span>$facebook<span class="pl-pds">`</span></span> as you would FB. Method and property names are the same as on the traditional FB object, except that they use promises instead of callbacks.
 
-<p>Use <code>$facebook</code> much as you would <code>FB</code>. Calls are the same as to the traditional <code>FB</code> object, except that they use promises instead of callbacks.</p>
-
-<div class="highlight highlight-javascript"><pre><span class="nx">angular</span>
-    <span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">'my-angularjs-app'</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">'my-controller'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'$facebook'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$facebook</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// bind directly to the response promise</span>
-        <span class="nx">$scope</span><span class="p">.</span><span class="nx">loginStatus</span> <span class="o">=</span> <span class="nx">$facebook</span><span class="p">.</span><span class="nx">getLoginStatus</span><span class="p">();</span>
-
-        <span class="c1">// use the promise in code</span>
-        <span class="nx">$facebook</span><span class="p">.</span><span class="nx">getLoginStatus</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span>
-            <span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">$scope</span><span class="p">.</span><span class="nx">loginResponse</span> <span class="o">=</span> <span class="nx">response</span><span class="p">;</span>
-            <span class="p">},</span>
-            <span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">$scope</span><span class="p">.</span><span class="nx">loginError</span> <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">error</span><span class="p">;</span>
-            <span class="p">}</span>
-        <span class="p">);</span>
-    <span class="p">}]);</span>
-</pre></div>
+<span class="pl-s1"><span class="pl-pds">`</span><span class="pl-pds">`</span><span class="pl-pds">`</span>javascript</span>
+<span class="pl-s1">angular</span>
+<span class="pl-s1">    .module('my-angularjs-app')</span>
+<span class="pl-s1">    .controller('my-controller', ['$facebook', function($facebook) {</span>
+<span class="pl-s1">        // bind directly to the response promise</span>
+<span class="pl-s1">        $scope.loginStatus = $facebook.getLoginStatus();</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">        // use the promise in code</span>
+<span class="pl-s1">        $facebook.getLoginStatus().then(</span>
+<span class="pl-s1">            function(response) {</span>
+<span class="pl-s1">                $scope.loginResponse = response;</span>
+<span class="pl-s1">            },</span>
+<span class="pl-s1">            function(response) {</span>
+<span class="pl-s1">                $scope.loginError = response.error;</span>
+<span class="pl-s1">            }</span>
+<span class="pl-s1">        );</span>
+<span class="pl-s1">    }]);</span></pre></div>
 
 <p>The one exception to this is <code>$facebook.getAuthResponse</code> which is synchronous.</p>
 
 <h3>
-<a name="events" class="anchor" href="#events"><span class="octicon octicon-link"></span></a>Events</h3>
+<a id="events" class="anchor" href="#events" aria-hidden="true"><span class="octicon octicon-link"></span></a>Events</h3>
 
-<p>Events from the facebook SDK are then broadcast through the $rootScope of the application. The naming convention is to use the same event name as the Facebook SDK, prepended with 'facebook.' - so 'auth.authResponseChange' is broadcast as 'facebook.auth.authResponseChange. Consume these events as you would any other angular event:</p>
+<p>Events from the Facebook SDK are then broadcast through the <code>$rootScope</code> of the application. The naming convention is to use the same event name as the Facebook SDK, prepended with <em>'facebook.'</em> - so <em>'auth.authResponseChange'</em> is broadcast as <em>'facebook.auth.authResponseChange'</em>. Consume these events as you would any other angular event:</p>
 
-<div class="highlight highlight-javascript"><pre><span class="nx">angular</span>
-    <span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">'my-angularjs-app'</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">'another-controller'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'$scope'</span><span class="p">,</span> <span class="s1">'$facebook'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">$facebook</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">$scope</span><span class="p">.</span><span class="nx">$on</span><span class="p">(</span><span class="s1">'facebook.auth.authResponseChange'</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">$scope</span><span class="p">.</span><span class="nx">authStatus</span> <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">status</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}]);</span>
-</pre></div>
+<div class="highlight highlight-javascript"><pre>angular
+    .module(<span class="pl-s1"><span class="pl-pds">'</span>my-angularjs-app<span class="pl-pds">'</span></span>)
+    .controller(<span class="pl-s1"><span class="pl-pds">'</span>another-controller<span class="pl-pds">'</span></span>, [<span class="pl-s1"><span class="pl-pds">'</span>$scope<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>$facebook<span class="pl-pds">'</span></span>, <span class="pl-st">function</span>(<span class="pl-vpf">$scope</span>, <span class="pl-vpf">$facebook</span>) {
+        $scope.$on(<span class="pl-s1"><span class="pl-pds">'</span>facebook.auth.authResponseChange<span class="pl-pds">'</span></span>, response) {
+            $scope.authStatus <span class="pl-k">=</span> response.<span class="pl-sc">status</span>;
+        }
+    }]);</pre></div>
 
-<h3><a name="parse" class="anchor" href="#parse"><span class="octicon octicon-link"></span></a>XFBML.parse</h3>
+<h3>
+<a id="xfbmlparse" class="anchor" href="#xfbmlparse" aria-hidden="true"><span class="octicon octicon-link"></span></a>XFBML.parse</h3>
 
-<p>When the Facebook SDK loads, it parses FBML mark up on the page and renders it in the browser (e.g. <code>fb:activity</code>, <code>fb:login</code>, etc). However, in an Angular app that uses routing (such as ngRoute or angular-ui-routing), when a new view loads this parser doesn't automatically run. Instead you need to manually call the <code>FB.XFBML.parse()</code> in order to render the FBML elements.</p>
-<p>The <code>$facebook.parse()</code> method wraps this function so that you can render FBML elements.</p>
+<p>When the Facebook SDK loads, it parses FBML mark up on the page and renders it in the browser (e.g. <em>fb:activity</em>, <em>fb:login</em>, etc). However, in an Angular app that uses routing when a new view loads this parser doesn't automatically run. Instead you need to manually call FB.XFBML.parse() in order to render the FBML elements.</p>
 
-<div class="highlight highlight-javascript">
-  <pre>
-angular
-    .module(<span class="s1">'my-angularjs-app'</span>)
-    .controller(<span class="s1">'my-controller'</span>, [<span class="s1">'$facebook'</span>, <span class="kd">function</span>($facebook) {
-        <span class="c">// Render FBML elements</span>
-        $facebook.parse();
-    }]);
-  </pre>
-</div>
+<p>The <code>$facebook.parse()</code> method wraps this function so that you can render FBML elements from within your Angular app.</p>
 
-
+<div class="highlight highlight-javascript"><pre>angular
+    .module(<span class="pl-s1"><span class="pl-pds">'</span>my-angularjs-app<span class="pl-pds">'</span></span>)
+    .controller(<span class="pl-s1"><span class="pl-pds">'</span>my-controller<span class="pl-pds">'</span></span>, [<span class="pl-s1"><span class="pl-pds">'</span>$facebook<span class="pl-pds">'</span></span>, <span class="pl-st">function</span>(<span class="pl-vpf">$facebook</span>) {
+        <span class="pl-c">// Render FBML elements</span>
+        $facebook.<span class="pl-s3">parse</span>();
+    }]);</pre></div>
       </section>
     </div>
 
