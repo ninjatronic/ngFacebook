@@ -30,7 +30,7 @@ describe('facebook', function() {
         });
     });
 
-    describe('-> $facebook', function() {
+    xdescribe('-> $facebook', function() {
         var rootScope, facebook, facebookProvider;
 
         beforeEach(function() {
@@ -43,10 +43,10 @@ describe('facebook', function() {
 
         describe('creation ->', function() {
             var events = {
-                auth: ['login', 'authResponseChange', 'statusChange', 'logout', 'prompt'],
-                xfbml: ['render'],
-                edge: ['create', 'remove'],
-                comment: ['create', 'remove'],
+                // auth: ['login', 'authResponseChange', 'statusChange', 'logout', 'prompt'],
+                // xfbml: ['render'],
+                // edge: ['create', 'remove'],
+                // comment: ['create', 'remove'],
                 message: ['send']
             };
 
@@ -56,9 +56,14 @@ describe('facebook', function() {
 
                     it('should subscribe to the '+eventName+' event', function() {
                         var subscribedEvents = [];
-                        spyOn(FB.Event, 'subscribe').andCallFake(function(name) {
+                        var spy = spyOn(FB.Event, 'subscribe');
+                        console.log('spy', spy, spy.andCallFake);
+                        var faker = spy.andCallFake(function(name) {
+                            console.log('subscribedEvents', subscribedEvents);
+                            console.log('name', name);
                             subscribedEvents.push(name);
                         });
+                        console.log('faker', faker);
                         inject(function($rootScope, $facebook) {
                             facebookProvider.init();
                             rootScope = $rootScope;

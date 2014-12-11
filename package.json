@@ -1,27 +1,25 @@
 {
-    "author": "Ninjatronic",
-    "devDependencies": {
-        "grunt": "",
-        "grunt-cli": "",
-        "phantom": "",
-        "phantomjs": "",
-        "grunt-contrib-clean": "",
-        "grunt-contrib-copy": "",
-        "grunt-contrib-jshint": "",
-        "grunt-contrib-watch": "",
-        "grunt-contrib-concat": "",
-        "grunt-contrib-uglify": "",
-        "grunt-karma": "",
-        "grunt-notify": "",
-        "grunt-strip": "",
-        "grunt-text-replace": ""
-    },
-    "name": "ngFacebook",
-    "description": "Facebook SDK wrapper for AngularJS Apps",
-    "license": "MIT",
-    "version": "0.0.3",
-    "scripts": {
-        "test": "grunt test",
-        "build": "grunt build"
-    }
+  "devDependencies": {
+    "grunt": "",
+    "grunt-cli": "",
+    "phantom": "",
+    "phantomjs": "",
+    "grunt-contrib-clean": "",
+    "grunt-contrib-copy": "",
+    "grunt-contrib-jshint": "",
+    "grunt-contrib-watch": "",
+    "grunt-contrib-concat": "",
+    "grunt-contrib-uglify": "",
+    "grunt-karma": "",
+    "grunt-notify": "",
+    "grunt-strip": "",
+    "grunt-text-replace": "",
+    "jasmine-core": "^2.1.3",
+    "karma-jasmine": "^0.3.2",
+    "karma-phantomjs-launcher": "^0.1.4"
+  },
+  "scripts": {
+    "test": "grunt test",
+    "build": "grunt build"
+  }
 }
