@@ -381,8 +381,17 @@ describe('facebook', function() {
                     expect(FB.XFBML.parse).toHaveBeenCalled();
                 });
 
-                it('should return undefined', function() {
-                    expect(facebook.parse()).toBeUndefined();
+                it('should always resolve', function() {
+                    spyOn(FB, 'parse').andCallFake(function(callback) {
+                        callback();
+                    });
+                    var result = {};
+                    facebook.parse().then(function(response) {
+                        result = response;
+                    });
+                    window.fbAsyncInit();
+                    rootScope.$apply();
+                    expect(result).toBeUndefined();
                 });
             });
         });
@@ -646,8 +655,16 @@ describe('facebook', function() {
                     expect(FB.XFBML.parse).toHaveBeenCalled();
                 });
 
-                it('should return undefined', function() {
-                    expect(facebook.parse()).toBeUndefined();
+                it('should always resolve', function() {
+                    spyOn(FB, 'parse').andCallFake(function(callback) {
+                        callback();
+                    });
+                    var result = {};
+                    facebook.parse().then(function(response) {
+                        result = response;
+                    });
+                    rootScope.$apply();
+                    expect(result).toBeUndefined();
                 });
             });
         });
