@@ -175,16 +175,19 @@ angular.module('facebook', []).provider('$facebook', function() {
                     }
                     return deferred.promise;
                 }
-                
-                function parse() {
-                    if(initialised) {
-                        FB.XFBML.parse()
+
+	            function parse() {
+		            var deferred = $q.defer();
+		            var parseArguments = arguments;
+		            if(initialised) {
+                        wrapWithArgs(FB.XFBML.parse, deferred, parseArguments);
                     } else {
                         queue.push(function() {
-                            FB.XFBML.parse()
-                        })
+                            wrapWithArgs(FB.XFBML.parse, deferred, parseArguments);
+                        });
                     }
-                }
+		            return deferred.promise;
+	            }
 
                 if(initialised) {
                     subscribe();
