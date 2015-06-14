@@ -1,10 +1,15 @@
 {
   "name": "ngFacebook",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Facebook SDK wrapper for AngularJS Apps",
   "homepage": "https://github.com/ninjatronic/ngFacebook",
   "authors": [
-    "Pete Martin <pete@ninjatronic.com>"
+    "Pete Martin <pete@ninjatronic.com>",
+    "Tom Brunoli <tom@tombrunoli.com",
+    "Colin Stuart",
+    "N B Payne",
+    "Mateus Jamiolkowski",
+    "Tim O'Sulg <timgluz@gmail.com>"
   ],
   "keywords": [
     "facebook",
