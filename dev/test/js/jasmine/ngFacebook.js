@@ -30,7 +30,7 @@ describe('facebook', function() {
         });
     });
 
-    xdescribe('-> $facebook', function() {
+    describe('-> $facebook', function() {
         var rootScope, facebook, facebookProvider;
 
         beforeEach(function() {
@@ -43,10 +43,10 @@ describe('facebook', function() {
 
         describe('creation ->', function() {
             var events = {
-                // auth: ['login', 'authResponseChange', 'statusChange', 'logout', 'prompt'],
-                // xfbml: ['render'],
-                // edge: ['create', 'remove'],
-                // comment: ['create', 'remove'],
+                auth: ['login', 'authResponseChange', 'statusChange', 'logout', 'prompt'],
+                xfbml: ['render'],
+                edge: ['create', 'remove'],
+                comment: ['create', 'remove'],
                 message: ['send']
             };
 
@@ -57,13 +57,9 @@ describe('facebook', function() {
                     it('should subscribe to the '+eventName+' event', function() {
                         var subscribedEvents = [];
                         var spy = spyOn(FB.Event, 'subscribe');
-                        console.log('spy', spy, spy.andCallFake);
-                        var faker = spy.andCallFake(function(name) {
-                            console.log('subscribedEvents', subscribedEvents);
-                            console.log('name', name);
+                        var faker = spy.and.callFake(function(name) {
                             subscribedEvents.push(name);
                         });
-                        console.log('faker', faker);
                         inject(function($rootScope, $facebook) {
                             facebookProvider.init();
                             rootScope = $rootScope;
@@ -78,7 +74,7 @@ describe('facebook', function() {
                         var subscribedEvents = {};
                         var expected = {data: 'payload'};
                         var response = null;
-                        spyOn(FB.Event, 'subscribe').andCallFake(function(name, handler) {
+                        spyOn(FB.Event, 'subscribe').and.callFake(function(name, handler) {
                             subscribedEvents[name] = handler;
                         });
                         inject(function($rootScope, $facebook) {
@@ -116,13 +112,13 @@ describe('facebook', function() {
                     spyOn(FB, 'api');
                     facebook.api('/me', 'post');
                     window.fbAsyncInit();
-                    expect(FB.api.mostRecentCall.args[0]).toBe('/me');
-                    expect(FB.api.mostRecentCall.args[1]).toBe('post');
+                    expect(FB.api.calls.mostRecent().args[0]).toBe('/me');
+                    expect(FB.api.calls.mostRecent().args[1]).toBe('post');
                 });
 
                 it('should reject errors', function() {
                     var expected = {error: {}};
-                    spyOn(FB, 'api').andCallFake(function(args, callback) {
+                    spyOn(FB, 'api').and.callFake(function(args, callback) {
                         callback(expected);
                     });
                     var result = null;
@@ -136,7 +132,7 @@ describe('facebook', function() {
 
                 it('should resolve responses', function() {
                     var expected = {success: {}};
-                    spyOn(FB, 'api').andCallFake(function(args, callback) {
+                    spyOn(FB, 'api').and.callFake(function(args, callback) {
                         callback(expected);
                     });
                     var result = null;
@@ -149,7 +145,7 @@ describe('facebook', function() {
                 });
 
                 it('should handle null responses', function() {
-                    spyOn(FB, 'api').andCallFake(function(args, callback) {
+                    spyOn(FB, 'api').and.callFake(function(args, callback) {
                         callback(null);
                     });
                     var result = {};
@@ -171,13 +167,13 @@ describe('facebook', function() {
                     spyOn(FB, 'ui');
                     facebook.ui('args1', 'args2');
                     window.fbAsyncInit();
-                    expect(FB.ui.mostRecentCall.args[0]).toBe('args1');
-                    expect(FB.ui.mostRecentCall.args[1]).toBe('args2');
+                    expect(FB.ui.calls.mostRecent().args[0]).toBe('args1');
+                    expect(FB.ui.calls.mostRecent().args[1]).toBe('args2');
                 });
 
                 it('should reject errors', function() {
                     var expected = {error: {}};
-                    spyOn(FB, 'ui').andCallFake(function(args, callback) {
+                    spyOn(FB, 'ui').and.callFake(function(args, callback) {
                         callback(expected);
                     });
                     var result = null;
@@ -191,7 +187,7 @@ describe('facebook', function() {
 
                 it('should resolve responses', function() {
                     var expected = {success: {}};
-                    spyOn(FB, 'ui').andCallFake(function(args, callback) {
+                    spyOn(FB, 'ui').and.callFake(function(args, callback) {
                         callback(expected);
                     });
                     var result = null;
@@ -204,7 +200,7 @@ describe('facebook', function() {
                 });
 
                 it('should handle null responses', function() {
-                    spyOn(FB, 'ui').andCallFake(function(args, callback) {
+                    spyOn(FB, 'ui').and.callFake(function(args, callback) {
                         callback(null);
                     });
                     var result = {};
@@ -241,7 +237,7 @@ describe('facebook', function() {
 
                 it('should reject errors', function() {
                     var expected = {error: {}};
-                    spyOn(FB, 'getLoginStatus').andCallFake(function(callback) {
+                    spyOn(FB, 'getLoginStatus').and.callFake(function(callback) {
                         callback(expected);
                     });
                     var result = null;
@@ -255,7 +251,7 @@ describe('facebook', function() {
 
                 it('should resolve responses', function() {
                     var expected = {success: {}};
-                    spyOn(FB, 'getLoginStatus').andCallFake(function(callback) {
+                    spyOn(FB, 'getLoginStatus').and.callFake(function(callback) {
                         callback(expected);
                     });
                     var result = null;
@@ -268,7 +264,7 @@ describe('facebook', function() {
                 });
 
                 it('should handle null responses', function() {
-                    spyOn(FB, 'getLoginStatus').andCallFake(function(callback) {
+                    spyOn(FB, 'getLoginStatus').and.callFake(function(callback) {
                         callback(null);
                     });
                     var result = {};
@@ -297,12 +293,12 @@ describe('facebook', function() {
                     spyOn(FB, 'login');
                     facebook.login('args');
                     window.fbAsyncInit();
-                    expect(FB.login.mostRecentCall.args[1]).toBe('args');
+                    expect(FB.login.calls.mostRecent().args[1]).toBe('args');
                 });
 
                 it('should reject errors', function() {
                     var expected = {};
-                    spyOn(FB, 'login').andCallFake(function(callback) {
+                    spyOn(FB, 'login').and.callFake(function(callback) {
                         callback(expected);
                     });
                     var result = null;
@@ -316,7 +312,7 @@ describe('facebook', function() {
 
                 it('should resolve responses', function() {
                     var expected = {authResponse: {}};
-                    spyOn(FB, 'login').andCallFake(function(callback) {
+                    spyOn(FB, 'login').and.callFake(function(callback) {
                         callback(expected);
                     });
                     var result = null;
@@ -329,7 +325,7 @@ describe('facebook', function() {
                 });
 
                 it('should handle null responses as errors', function() {
-                    spyOn(FB, 'login').andCallFake(function(callback) {
+                    spyOn(FB, 'login').and.callFake(function(callback) {
                         callback(null);
                     });
                     var result = {};
@@ -356,7 +352,7 @@ describe('facebook', function() {
 
                 it('should always resolve', function() {
                     var expected = null;
-                    spyOn(FB, 'logout').andCallFake(function(callback) {
+                    spyOn(FB, 'logout').and.callFake(function(callback) {
                         callback(expected);
                     });
                     var result = {};
@@ -382,7 +378,7 @@ describe('facebook', function() {
                 });
 
                 it('should always resolve', function() {
-                    spyOn(FB, 'parse').andCallFake(function(callback) {
+                    spyOn(FB.XFBML, 'parse').and.callFake(function(callback) {
                         callback();
                     });
                     var result = {};
@@ -415,12 +411,12 @@ describe('facebook', function() {
                 it('should call FB.api with args', function() {
                     spyOn(FB, 'api');
                     facebook.api('/me');
-                    expect(FB.api.mostRecentCall.args[0]).toBe('/me');
+                    expect(FB.api.calls.mostRecent().args[0]).toBe('/me');
                 });
 
                 it('should reject errors', function() {
                     var expected = {error: {}};
-                    spyOn(FB, 'api').andCallFake(function(args, callback) {
+                    spyOn(FB, 'api').and.callFake(function(args, callback) {
                         callback(expected);
                     });
                     var result = null;
@@ -433,7 +429,7 @@ describe('facebook', function() {
 
                 it('should resolve responses', function() {
                     var expected = {success: {}};
-                    spyOn(FB, 'api').andCallFake(function(args, callback) {
+                    spyOn(FB, 'api').and.callFake(function(args, callback) {
                         callback(expected);
                     });
                     var result = null;
@@ -445,7 +441,7 @@ describe('facebook', function() {
                 });
 
                 it('should handle null responses', function() {
-                    spyOn(FB, 'api').andCallFake(function(args, callback) {
+                    spyOn(FB, 'api').and.callFake(function(args, callback) {
                         callback(null);
                     });
                     var result = {};
@@ -465,12 +461,12 @@ describe('facebook', function() {
                 it('should call FB.ui with args', function() {
                     spyOn(FB, 'ui');
                     facebook.ui('args');
-                    expect(FB.ui.mostRecentCall.args[0]).toBe('args');
+                    expect(FB.ui.calls.mostRecent().args[0]).toBe('args');
                 });
 
                 it('should reject errors', function() {
                     var expected = {error: {}};
-                    spyOn(FB, 'ui').andCallFake(function(args, callback) {
+                    spyOn(FB, 'ui').and.callFake(function(args, callback) {
                         callback(expected);
                     });
                     var result = null;
@@ -483,7 +479,7 @@ describe('facebook', function() {
 
                 it('should resolve responses', function() {
                     var expected = {success: {}};
-                    spyOn(FB, 'ui').andCallFake(function(args, callback) {
+                    spyOn(FB, 'ui').and.callFake(function(args, callback) {
                         callback(expected);
                     });
                     var result = null;
@@ -495,7 +491,7 @@ describe('facebook', function() {
                 });
 
                 it('should handle null responses', function() {
-                    spyOn(FB, 'ui').andCallFake(function(args, callback) {
+                    spyOn(FB, 'ui').and.callFake(function(args, callback) {
                         callback(null);
                     });
                     var result = {};
@@ -514,7 +510,7 @@ describe('facebook', function() {
 
                 it('should return FB.getAuthResponse()', function() {
                     var expected = {result:'response'};
-                    spyOn(FB, 'getAuthResponse').andReturn(expected)
+                    spyOn(FB, 'getAuthResponse').and.returnValue(expected)
                     expect(facebook.getAuthResponse()).toBe(expected);
                 });
             });
@@ -532,7 +528,7 @@ describe('facebook', function() {
 
                 it('should reject errors', function() {
                     var expected = {error: {}};
-                    spyOn(FB, 'getLoginStatus').andCallFake(function(callback) {
+                    spyOn(FB, 'getLoginStatus').and.callFake(function(callback) {
                         callback(expected);
                     });
                     var result = null;
@@ -545,7 +541,7 @@ describe('facebook', function() {
 
                 it('should resolve responses', function() {
                     var expected = {success: {}};
-                    spyOn(FB, 'getLoginStatus').andCallFake(function(callback) {
+                    spyOn(FB, 'getLoginStatus').and.callFake(function(callback) {
                         callback(expected);
                     });
                     var result = null;
@@ -557,7 +553,7 @@ describe('facebook', function() {
                 });
 
                 it('should handle null responses', function() {
-                    spyOn(FB, 'getLoginStatus').andCallFake(function(callback) {
+                    spyOn(FB, 'getLoginStatus').and.callFake(function(callback) {
                         callback(null);
                     });
                     var result = {};
@@ -582,7 +578,7 @@ describe('facebook', function() {
 
                 it('should reject errors', function() {
                     var expected = {};
-                    spyOn(FB, 'login').andCallFake(function(callback) {
+                    spyOn(FB, 'login').and.callFake(function(callback) {
                         callback(expected);
                     });
                     var result = null;
@@ -595,7 +591,7 @@ describe('facebook', function() {
 
                 it('should resolve responses', function() {
                     var expected = {authResponse: {}};
-                    spyOn(FB, 'login').andCallFake(function(callback) {
+                    spyOn(FB, 'login').and.callFake(function(callback) {
                         callback(expected);
                     });
                     var result = null;
@@ -607,7 +603,7 @@ describe('facebook', function() {
                 });
 
                 it('should handle null responses as errors', function() {
-                    spyOn(FB, 'login').andCallFake(function(callback) {
+                    spyOn(FB, 'login').and.callFake(function(callback) {
                         callback(null);
                     });
                     var result = {};
@@ -632,7 +628,7 @@ describe('facebook', function() {
 
                 it('should always resolve', function() {
                     var expected = null;
-                    spyOn(FB, 'logout').andCallFake(function(callback) {
+                    spyOn(FB, 'logout').and.callFake(function(callback) {
                         callback(expected);
                     });
                     var result = {};
@@ -656,7 +652,7 @@ describe('facebook', function() {
                 });
 
                 it('should always resolve', function() {
-                    spyOn(FB, 'parse').andCallFake(function(callback) {
+                    spyOn(FB.XFBML, 'parse').and.callFake(function(callback) {
                         callback();
                     });
                     var result = {};
